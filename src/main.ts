@@ -1,20 +1,60 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import {Button, Select} form 'element-ui';
+import { createApp } from 'vue';
+import App from "./App.vue";
+import { store, key } from './store'
+import router from "./router";
 import service from "./utils/https";
 import urls from "./utils/urls";
+import { 
+    ElButton, 
+    ElDialog,
+    ElForm,
+    ElFormItem,
+    ElInput,
+    ElMessage,
+    ElMenu,
+    ElMenuItem,
+    ElRow,
+    ElCol,
+    ElDropdown,
+    ElDropdownMenu,
+    ElDropdownItem,
+    ElLoading,
+    ElTimeline,
+    ElTimelineItem,
+    ElCard,
+    ElTag,
+    ElIcon,
+    ElCollapseTransition
+} from 'element-plus';
 
-Vue.prototype.$https = service; // 其他页面在使用 axios 的时候直接  this.$http 就可以了
-Vue.prototype.$urls = urls; // 其他页面在使用 urls 的时候直接  this.$urls 就可以了
+const app = createApp(App)
 
-Vue.config.productionTip = false
-Vue.use(Button)
-Vue.use(Select)
+app.component(ElButton.name, ElButton);
+app.component(ElDialog.name, ElDialog);
+app.component(ElForm.name, ElForm);
+app.component(ElFormItem.name, ElFormItem);
+app.component(ElInput.name, ElInput);
+app.component(ElMessage.name, ElMessage);
+app.component(ElMenu.name, ElMenu);
+app.component(ElMenuItem.name, ElMenuItem);
+app.component(ElRow.name, ElRow);
+app.component(ElCol.name, ElCol);
+app.component(ElDropdownMenu.name, ElDropdownMenu);
+app.component(ElTimeline.name, ElTimeline);
+app.component(ElTimelineItem.name, ElTimelineItem);
+app.component(ElDropdownItem.name, ElDropdownItem);
+app.component(ElDropdown.name, ElDropdown);
+app.component(ElCard.name, ElCard);
+app.component(ElTag.name, ElTag);
+app.component(ElIcon.name, ElIcon);
+app.component(ElCollapseTransition.name, ElCollapseTransition);
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+app.config.globalProperties.$message = ElMessage;
+app.config.globalProperties.$loading = ElLoading.service;
+app.config.globalProperties.productionTip = false;
+app.config.globalProperties.$https = service;
+app.config.globalProperties.$urls = urls;
+
+app.use(store, key)
+app.use(router)
+app.mount('#app');
